@@ -605,8 +605,7 @@ footer{background:var(--cream);padding-top:90px;}
       <li><a href="#footer">Contact</a></li>
     </ul>
     <div class="nav-icons">
-      <button class="icon-btn" id="searchBtn" aria-label="Search"><i data-lucide="search" style="width:18px;height:18px;"></i></button>
-      <button class="icon-btn" aria-label="Wishlist"><i data-lucide="heart" style="width:18px;height:18px;"></i><span class="badge" id="wishlistCount" style="display:none;">0</span></button>
+
       <button class="icon-btn" id="cartBtn" aria-label="Cart"><i data-lucide="shopping-bag" style="width:18px;height:18px;"></i><span class="badge" id="cartCount">0</span></button>
       <a href="#bestsellers" class="btn btn-primary" style="padding:11px 24px;font-size:13px;">Shop Now</a>
       <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Menu"><i data-lucide="menu" style="width:20px;height:20px;"></i></button>
@@ -688,22 +687,22 @@ footer{background:var(--cream);padding-top:90px;}
       <div class="collection-card reveal" style="--i:0;">
         <img src="https://picsum.photos/seed/crochet-bouquets-col/500/650" alt="Crochet Bouquets" />
         <div class="collection-arrow"><i data-lucide="arrow-up-right" style="width:18px;height:18px;color:#3F3245;"></i></div>
-        <div class="collection-overlay"><span>24 pieces</span><h3>Crochet Bouquets</h3></div>
+        <div class="collection-overlay"><h3>Crochet Bouquets</h3></div>
       </div>
       <div class="collection-card reveal" style="--i:1;">
         <img src="https://picsum.photos/seed/plushies-col/500/650" alt="Plushies" />
         <div class="collection-arrow"><i data-lucide="arrow-up-right" style="width:18px;height:18px;color:#3F3245;"></i></div>
-        <div class="collection-overlay"><span>19 pieces</span><h3>Plushies</h3></div>
+        <div class="collection-overlay"><h3>Plushies</h3></div>
       </div>
       <div class="collection-card reveal" style="--i:2;">
         <img src="https://picsum.photos/seed/gift-boxes-col/500/650" alt="Gift Boxes" />
         <div class="collection-arrow"><i data-lucide="arrow-up-right" style="width:18px;height:18px;color:#3F3245;"></i></div>
-        <div class="collection-overlay"><span>16 pieces</span><h3>Gift Boxes</h3></div>
+        <div class="collection-overlay"><h3>Gift Boxes</h3></div>
       </div>
       <div class="collection-card reveal" style="--i:3;">
         <img src="https://picsum.photos/seed/wedding-col/500/650" alt="Wedding Bouquets" />
         <div class="collection-arrow"><i data-lucide="arrow-up-right" style="width:18px;height:18px;color:#3F3245;"></i></div>
-        <div class="collection-overlay"><span>Made to order</span><h3>Accessories</h3></div>
+        <div class="collection-overlay"><h3>Accessories</h3></div>
       </div>
     </div>
   </div>
@@ -969,7 +968,7 @@ footer{background:var(--cream);padding-top:90px;}
   <a href="https://instagram.com/_lavender_lush" target="_blank" aria-label="Instagram">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
   </a>
-  <a href="mailto:contact@lavenderlush.com" aria-label="Email"><i data-lucide="mail"></i></a>
+  <a href="mailto:lavenderlush1211@gmail.com" aria-label="Email"><i data-lucide="mail"></i></a>
   <a href="https://wa.me/9789512412" target="_blank" aria-label="WhatsApp"><i data-lucide="phone"></i></a>
 </div>
 
@@ -1146,8 +1145,10 @@ footer{background:var(--cream);padding-top:90px;}
       </div>
     </div>
     <div class="form-row">
-      <label>Image URL</label>
-      <input type="text" id="pfImage" required placeholder="https://..." />
+      <label>Product Image</label>
+      <input type="file" id="pfImageFile" accept="image/*" />
+      <input type="hidden" id="pfImage" required />
+      <img id="pfImagePreview" src="" alt="Preview" style="max-width:100px; margin-top:10px; display:none; border-radius:5px;" />
     </div>
     <div class="form-row-split">
       <div class="form-row">
@@ -1426,7 +1427,6 @@ function renderProducts(){
     <div class="product-card show" data-cat="${p.category}" data-id="${p.id}">
       <div class="product-media">
         ${p.badge ? `<span class="product-badge${p.badge==='New' ? ' new' : ''}">${p.badge}</span>` : ''}
-        <button class="wishlist-btn" aria-label="Wishlist"><i data-lucide="heart" style="width:16px;height:16px;"></i></button>
         <img src="${p.image}" alt="${p.name}" />
         <div class="quick-add" data-id="${p.id}"><i data-lucide="zap" style="width:14px;height:14px;"></i> Quick Add</div>
       </div>
@@ -1435,7 +1435,7 @@ function renderProducts(){
         <h4>${p.name}</h4>
         <div class="p-rating">${starIcons(p.rating)}<span>(${p.reviews})</span></div>
         <div class="p-footer">
-          <span class="p-price">$${p.price}${p.oldPrice ? `<small>$${p.oldPrice}</small>` : ''}</span>
+          <span class="p-price">Rs. ${p.price}${p.oldPrice ? `<small>Rs. ${p.oldPrice}</small>` : ''}</span>
           <button class="add-cart-btn" data-id="${p.id}"><i data-lucide="plus" style="width:17px;height:17px;"></i></button>
         </div>
       </div>
@@ -1450,15 +1450,9 @@ function renderProducts(){
 renderProducts();
 
 /* ============================================================
-   WISHLIST TOGGLE (event delegation so re-rendered cards stay wired)
+   CART TRIGGER
 ============================================================ */
 document.getElementById('productGrid').addEventListener('click', (e) => {
-  const wishBtn = e.target.closest('.wishlist-btn');
-  if(wishBtn){
-    wishBtn.classList.toggle('active');
-    if(wishBtn.classList.contains('active')) showToast('Added to wishlist', 'heart');
-    return;
-  }
   const cartTrigger = e.target.closest('.add-cart-btn, .quick-add');
   if(cartTrigger){
     addToCart(cartTrigger.dataset.id);
@@ -1502,14 +1496,14 @@ function renderCart(){
             <span>${item.qty}</span>
             <button class="qty-inc" aria-label="Increase">+</button>
           </div>
-          <span class="ci-price">$${(item.qty * item.price).toFixed(2)}</span>
+          <span class="ci-price">Rs. ${(item.qty * item.price).toFixed(2)}</span>
         </div>
       </div>
       <button class="ci-remove" aria-label="Remove"><i data-lucide="trash-2" style="width:16px;height:16px;"></i></button>
     </div>
   `).join('');
   lucide.createIcons();
-  cartSubtotalEl.textContent = `$${cartSubtotal().toFixed(2)}`;
+  cartSubtotalEl.textContent = `Rs. ${cartSubtotal().toFixed(2)}`;
 }
 
 function addToCart(id){
@@ -1554,8 +1548,8 @@ const checkoutModal = document.getElementById('checkoutModal');
 function openCheckout(){
   if(cart.length === 0){ showToast('Your bag is empty', 'shopping-bag'); return; }
   document.getElementById('checkoutSummary').innerHTML = cart.map(i => `
-    <div class="cs-row"><span>${i.name} × ${i.qty}</span><span>$${(i.qty*i.price).toFixed(2)}</span></div>
-  `).join('') + `<div class="cs-total"><span>Total</span><span>$${cartSubtotal().toFixed(2)}</span></div>`;
+    <div class="cs-row"><span>${i.name} × ${i.qty}</span><span>Rs. ${(i.qty*i.price).toFixed(2)}</span></div>
+  `).join('') + `<div class="cs-total"><span>Total</span><span>Rs. ${cartSubtotal().toFixed(2)}</span></div>`;
   closeCart();
   checkoutOverlay.classList.add('open');
   checkoutModal.classList.add('open');
@@ -1596,11 +1590,11 @@ document.getElementById('checkoutForm').addEventListener('submit', (e) => {
   saveOrders();
 
   let msg = `Hi Lavender Lush! I'd like to place an order (${order.id}):%0A%0A`;
-  cart.forEach(i => { msg += `• ${i.name} × ${i.qty} — $${(i.qty*i.price).toFixed(2)}%0A`; });
-  msg += `%0ATotal: $${cartSubtotal().toFixed(2)}%0A%0ADeliver to:%0A${name}, ${phone}%0A${address}, ${city} - ${pincode}`;
+  cart.forEach(i => { msg += `• ${i.name} × ${i.qty} — Rs. ${(i.qty*i.price).toFixed(2)}%0A`; });
+  msg += `%0ATotal: Rs. ${cartSubtotal().toFixed(2)}%0A%0ADeliver to:%0A${name}, ${phone}%0A${address}, ${city} - ${pincode}`;
   if(note) msg += `%0A%0ANote: ${note}`;
 
-  window.open(`https://wa.me/15552147788?text=${msg}`, '_blank');
+  window.open(`https://wa.me/9789512412?text=${msg}`, '_blank');
 
   cart = [];
   saveCart();
@@ -1751,7 +1745,7 @@ function renderAdminProducts(){
       <td><img src="${p.image}" alt="${p.name}" /></td>
       <td>${p.name}</td>
       <td>${CATEGORY_LABELS[p.category] || p.category}</td>
-      <td>$${p.price}${p.oldPrice ? ` <span style="color:var(--text-light);text-decoration:line-through;font-size:12px;">$${p.oldPrice}</span>` : ''}</td>
+      <td>Rs. ${p.price}${p.oldPrice ? ` <span style="color:var(--text-light);text-decoration:line-through;font-size:12px;">Rs. ${p.oldPrice}</span>` : ''}</td>
       <td>${p.badge ? `<span class="badge-pill">${p.badge}</span>` : '—'}</td>
       <td>${p.rating} ★ (${p.reviews})</td>
       <td>
@@ -1798,7 +1792,7 @@ function renderAdminOrders(){
       <td>${o.customer.name}</td>
       <td>${o.customer.phone}</td>
       <td>${o.items.reduce((s,i)=>s+i.qty,0)} items</td>
-      <td>$${o.total.toFixed(2)}</td>
+      <td>Rs. ${o.total.toFixed(2)}</td>
       <td>
         <select class="status-select order-status">
           <option ${o.status==='Pending'?'selected':''}>Pending</option>
@@ -1838,7 +1832,7 @@ function renderAdminDashboard(){
   document.getElementById('statOrders').textContent = orders.length;
   document.getElementById('statPending').textContent = orders.filter(o => o.status === 'Pending').length;
   const revenue = orders.reduce((s,o) => s + o.total, 0);
-  document.getElementById('statRevenue').textContent = `$${revenue.toFixed(2)}`;
+  document.getElementById('statRevenue').textContent = `Rs. ${revenue.toFixed(2)}`;
 
   const tbody = document.querySelector('#recentOrdersTable tbody');
   const recent = orders.slice(0, 5);
@@ -1847,7 +1841,7 @@ function renderAdminDashboard(){
       <td>${o.id}</td>
       <td>${o.customer.name}</td>
       <td>${o.items.reduce((s,i)=>s+i.qty,0)} items</td>
-      <td>$${o.total.toFixed(2)}</td>
+      <td>Rs. ${o.total.toFixed(2)}</td>
       <td>${statusPillHtml(o.status)}</td>
     </tr>
   `).join('') : `<tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:26px 0;">No orders yet</td></tr>`;
@@ -1916,10 +1910,10 @@ function goToSlide(i){
 }
 document.getElementById('prevSlide').addEventListener('click', () => goToSlide(slideIndex - 1));
 document.getElementById('nextSlide').addEventListener('click', () => goToSlide(slideIndex + 1));
-let autoSlide = setInterval(() => goToSlide(slideIndex + 1), 5500);
+let autoSlide = setInterval(() => goToSlide(slideIndex + 1), 5000);
 document.querySelector('.testimonial-wrap').addEventListener('mouseenter', () => clearInterval(autoSlide));
 document.querySelector('.testimonial-wrap').addEventListener('mouseleave', () => {
-  autoSlide = setInterval(() => goToSlide(slideIndex + 1), 5500);
+  autoSlide = setInterval(() => goToSlide(slideIndex + 1), 5000);
 });
 
 /* ============================================================
@@ -1954,12 +1948,7 @@ newsletterForm.addEventListener('submit', (e) => {
   showToast('Subscribed successfully');
 });
 
-/* ============================================================
-   SEARCH BUTTON (visual demo)
-============================================================ */
-document.getElementById('searchBtn').addEventListener('click', () => {
-  showToast('Search coming soon');
-});
+
 </script>
 
 </body>

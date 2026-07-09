@@ -5,7 +5,7 @@ let html = fs.readFileSync('public/index.html', 'utf8');
 html = html.replace(/<div class="footer-social">[\s\S]*?<\/div>/, `
 <div class="footer-social">
   <a href="https://instagram.com/_lavender_lush" target="_blank" aria-label="Instagram"><i data-lucide="instagram"></i></a>
-  <a href="mailto:contact@lavenderlush.com" aria-label="Email"><i data-lucide="mail"></i></a>
+  <a href="mailto:lavenderlush1211@gmail.com" aria-label="Email"><i data-lucide="mail"></i></a>
   <a href="https://wa.me/9789512412" target="_blank" aria-label="WhatsApp"><i data-lucide="phone"></i></a>
 </div>
 `);
@@ -18,7 +18,7 @@ html = html.replace(/<li><a href="#">Shipping Info<\/a><\/li>/, '');
 html = html.replace(/<h4>Get in Touch<\/h4>\s*<ul class="footer-links">[\s\S]*?<\/ul>/, `
 <h4>Get in Touch</h4>
 <ul class="footer-links">
-  <li>Email: contact@lavenderlush.com</li>
+  <li>Email: lavenderlush1211@gmail.com</li>
   <li>Phone: 9789512412</li>
 </ul>
 `);

@@ -199,7 +199,6 @@ function renderProducts(){
     <div class="product-card show" data-cat="${p.category}" data-id="${p.id}">
       <div class="product-media">
         ${p.badge ? `<span class="product-badge${p.badge==='New' ? ' new' : ''}">${p.badge}</span>` : ''}
-        <button class="wishlist-btn" aria-label="Wishlist"><i data-lucide="heart" style="width:16px;height:16px;"></i></button>
         <img src="${p.image}" alt="${p.name}" />
         <div class="quick-add" data-id="${p.id}"><i data-lucide="zap" style="width:14px;height:14px;"></i> Quick Add</div>
       </div>
@@ -208,7 +207,7 @@ function renderProducts(){
         <h4>${p.name}</h4>
         <div class="p-rating">${starIcons(p.rating)}<span>(${p.reviews})</span></div>
         <div class="p-footer">
-          <span class="p-price">$${p.price}${p.oldPrice ? `<small>$${p.oldPrice}</small>` : ''}</span>
+          <span class="p-price">Rs. ${p.price}${p.oldPrice ? `<small>Rs. ${p.oldPrice}</small>` : ''}</span>
           <button class="add-cart-btn" data-id="${p.id}"><i data-lucide="plus" style="width:17px;height:17px;"></i></button>
         </div>
       </div>
@@ -226,12 +225,7 @@ renderProducts();
    WISHLIST TOGGLE (event delegation so re-rendered cards stay wired)
 ============================================================ */
 document.getElementById('productGrid').addEventListener('click', (e) => {
-  const wishBtn = e.target.closest('.wishlist-btn');
-  if(wishBtn){
-    wishBtn.classList.toggle('active');
-    if(wishBtn.classList.contains('active')) showToast('Added to wishlist', 'heart');
-    return;
-  }
+
   const cartTrigger = e.target.closest('.add-cart-btn, .quick-add');
   if(cartTrigger){
     addToCart(cartTrigger.dataset.id);
@@ -275,14 +269,14 @@ function renderCart(){
             <span>${item.qty}</span>
             <button class="qty-inc" aria-label="Increase">+</button>
           </div>
-          <span class="ci-price">$${(item.qty * item.price).toFixed(2)}</span>
+          <span class="ci-price">Rs. ${(item.qty * item.price).toFixed(2)}</span>
         </div>
       </div>
       <button class="ci-remove" aria-label="Remove"><i data-lucide="trash-2" style="width:16px;height:16px;"></i></button>
     </div>
   `).join('');
   lucide.createIcons();
-  cartSubtotalEl.textContent = `$${cartSubtotal().toFixed(2)}`;
+  cartSubtotalEl.textContent = `Rs. ${cartSubtotal().toFixed(2)}`;
 }
 
 function addToCart(id){
@@ -327,8 +321,8 @@ const checkoutModal = document.getElementById('checkoutModal');
 function openCheckout(){
   if(cart.length === 0){ showToast('Your bag is empty', 'shopping-bag'); return; }
   document.getElementById('checkoutSummary').innerHTML = cart.map(i => `
-    <div class="cs-row"><span>${i.name} × ${i.qty}</span><span>$${(i.qty*i.price).toFixed(2)}</span></div>
-  `).join('') + `<div class="cs-total"><span>Total</span><span>$${cartSubtotal().toFixed(2)}</span></div>`;
+    <div class="cs-row"><span>${i.name} × ${i.qty}</span><span>Rs. ${(i.qty*i.price).toFixed(2)}</span></div>
+  `).join('') + `<div class="cs-total"><span>Total</span><span>Rs. ${cartSubtotal().toFixed(2)}</span></div>`;
   closeCart();
   checkoutOverlay.classList.add('open');
   checkoutModal.classList.add('open');
@@ -386,11 +380,11 @@ document.getElementById('checkoutForm').addEventListener('submit', async (e) => 
 
 
   let msg = `Hi Lavender Lush! I'd like to place an order (${order.id}):%0A%0A`;
-  cart.forEach(i => { msg += `• ${i.name} × ${i.qty} — $${(i.qty*i.price).toFixed(2)}%0A`; });
-  msg += `%0ATotal: $${cartSubtotal().toFixed(2)}%0A%0ADeliver to:%0A${name}, ${phone}%0A${address}, ${city} - ${pincode}`;
+  cart.forEach(i => { msg += `• ${i.name} × ${i.qty} — Rs. ${(i.qty*i.price).toFixed(2)}%0A`; });
+  msg += `%0ATotal: Rs. ${cartSubtotal().toFixed(2)}%0A%0ADeliver to:%0A${name}, ${phone}%0A${address}, ${city} - ${pincode}`;
   if(note) msg += `%0A%0ANote: ${note}`;
 
-  window.open(`https://wa.me/15552147788?text=${msg}`, '_blank');
+  window.open(`https://wa.me/9789512412?text=${msg}`, '_blank');
 
   cart = [];
   saveCart();
@@ -477,6 +471,7 @@ const productForm = document.getElementById('productForm');
 
 function openProductForm(id){
   productForm.reset();
+  const preview = document.getElementById('pfImagePreview');
   if(id){
     const p = products.find(x => x.id === id);
     document.getElementById('productFormTitle').textContent = 'Edit Product';
@@ -490,10 +485,21 @@ function openProductForm(id){
     document.getElementById('pfImage').value = p.image;
     document.getElementById('pfRating').value = p.rating;
     document.getElementById('pfReviews').value = p.reviews;
+    if (p.image) {
+      preview.src = p.image;
+      preview.style.display = 'block';
+    } else {
+      preview.src = '';
+      preview.style.display = 'none';
+    }
   } else {
     document.getElementById('productFormTitle').textContent = 'Add Product';
     document.getElementById('pfSubmitBtn').textContent = 'Save Product';
     document.getElementById('pfId').value = '';
+    document.getElementById('pfImage').value = '';
+    document.getElementById('pfImageFile').value = '';
+    preview.src = '';
+    preview.style.display = 'none';
   }
   productFormOverlay.classList.add('open');
   productFormModal.classList.add('open');
@@ -502,6 +508,34 @@ function closeProductForm(){ productFormOverlay.classList.remove('open'); produc
 document.getElementById('addProductBtn').addEventListener('click', () => openProductForm(null));
 document.getElementById('productFormClose').addEventListener('click', closeProductForm);
 productFormOverlay.addEventListener('click', closeProductForm);
+
+document.getElementById('pfImageFile').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const formData = new FormData();
+  formData.append('images', file);
+  
+  try {
+    const token = localStorage.getItem('ll_admin_token');
+    const res = await fetch('/api/products/upload', {
+      method: 'POST',
+      headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+      body: formData
+    });
+    const data = await res.json();
+    if (data.success && data.urls.length > 0) {
+      document.getElementById('pfImage').value = data.urls[0];
+      const preview = document.getElementById('pfImagePreview');
+      preview.src = data.urls[0];
+      preview.style.display = 'block';
+      showToast('Image uploaded', 'check-circle');
+    } else {
+      showToast('Image upload failed', 'alert-circle');
+    }
+  } catch (err) {
+    showToast('Error uploading image', 'alert-circle');
+  }
+});
 
 productForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -539,7 +573,7 @@ function renderAdminProducts(){
       <td><img src="${p.image}" alt="${p.name}" /></td>
       <td>${p.name}</td>
       <td>${CATEGORY_LABELS[p.category] || p.category}</td>
-      <td>$${p.price}${p.oldPrice ? ` <span style="color:var(--text-light);text-decoration:line-through;font-size:12px;">$${p.oldPrice}</span>` : ''}</td>
+      <td>Rs. ${p.price}${p.oldPrice ? ` <span style="color:var(--text-light);text-decoration:line-through;font-size:12px;">Rs. ${p.oldPrice}</span>` : ''}</td>
       <td>${p.badge ? `<span class="badge-pill">${p.badge}</span>` : '—'}</td>
       <td>${p.rating} ★ (${p.reviews})</td>
       <td>
@@ -586,7 +620,7 @@ function renderAdminOrders(){
       <td>${o.customer.name}</td>
       <td>${o.customer.phone}</td>
       <td>${o.items.reduce((s,i)=>s+i.qty,0)} items</td>
-      <td>$${o.total.toFixed(2)}</td>
+      <td>Rs. ${o.total.toFixed(2)}</td>
       <td>
         <select class="status-select order-status">
           <option ${o.status==='Pending'?'selected':''}>Pending</option>
@@ -629,7 +663,7 @@ function renderAdminDashboard(){
   document.getElementById('statOrders').textContent = orders.length;
   document.getElementById('statPending').textContent = orders.filter(o => o.status === 'Pending').length;
   const revenue = orders.reduce((s,o) => s + o.total, 0);
-  document.getElementById('statRevenue').textContent = `$${revenue.toFixed(2)}`;
+  document.getElementById('statRevenue').textContent = `Rs. ${revenue.toFixed(2)}`;
 
   const tbody = document.querySelector('#recentOrdersTable tbody');
   const recent = orders.slice(0, 5);
@@ -638,7 +672,7 @@ function renderAdminDashboard(){
       <td>${o.id}</td>
       <td>${o.customer.name}</td>
       <td>${o.items.reduce((s,i)=>s+i.qty,0)} items</td>
-      <td>$${o.total.toFixed(2)}</td>
+      <td>Rs. ${o.total.toFixed(2)}</td>
       <td>${statusPillHtml(o.status)}</td>
     </tr>
   `).join('') : `<tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:26px 0;">No orders yet</td></tr>`;
@@ -713,10 +747,10 @@ function goToSlide(i){
 }
 document.getElementById('prevSlide').addEventListener('click', () => goToSlide(slideIndex - 1));
 document.getElementById('nextSlide').addEventListener('click', () => goToSlide(slideIndex + 1));
-let autoSlide = setInterval(() => goToSlide(slideIndex + 1), 5500);
+let autoSlide = setInterval(() => goToSlide(slideIndex + 1), 5000);
 document.querySelector('.testimonial-wrap').addEventListener('mouseenter', () => clearInterval(autoSlide));
 document.querySelector('.testimonial-wrap').addEventListener('mouseleave', () => {
-  autoSlide = setInterval(() => goToSlide(slideIndex + 1), 5500);
+  autoSlide = setInterval(() => goToSlide(slideIndex + 1), 5000);
 });
 
 /* ============================================================
@@ -748,17 +782,9 @@ if(customOrderForm) {
   customOrderForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const text = document.getElementById('customOrderText').value;
-    try {
-      await fetch('/api/whatsapp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text })
-      });
-      showToast('Request sent securely!', 'check-circle');
-      customOrderForm.reset();
-    } catch(err) {
-      showToast('Error sending request', 'alert-circle');
-    }
+    window.open(`https://wa.me/9789512412?text=${encodeURIComponent("Custom Order Request: " + text)}`, '_blank');
+    showToast('Redirecting to WhatsApp...', 'check-circle');
+    customOrderForm.reset();
   });
 }
  
@@ -768,12 +794,7 @@ if(customOrderForm) {
   showToast('Subscribed successfully');
 });
 
-/* ============================================================
-   SEARCH BUTTON (visual demo)
-============================================================ */
-document.getElementById('searchBtn').addEventListener('click', () => {
-  showToast('Search coming soon');
-});
+
 
 // Hero Slider
 let currentSlide = 0;
