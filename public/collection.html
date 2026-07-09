@@ -1091,8 +1091,8 @@ footer{background:var(--cream);padding-top:90px;}
   <p class="modal-sub">Sign in to manage Lavender Lush.</p>
   <form id="adminLoginForm">
     <div class="form-row">
-      <label>Username</label>
-      <input type="text" id="adminUser" required placeholder="" autocomplete="username" />
+      <label>Email</label>
+      <input type="email" id="adminUser" required placeholder="lavenderlush1211@gmail.com" autocomplete="email" />
     </div>
     <div class="form-row">
       <label>Password</label>
@@ -1623,17 +1623,30 @@ document.getElementById('adminLoginLink').addEventListener('click', openAdminLog
 document.getElementById('adminLoginClose').addEventListener('click', closeAdminLogin);
 adminLoginOverlay.addEventListener('click', closeAdminLogin);
 
-document.getElementById('adminLoginForm').addEventListener('submit', (e) => {
+document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const user = document.getElementById('adminUser').value.trim();
-  const pass = document.getElementById('adminPass').value.trim();
-  if(user === ADMIN_USER && pass === ADMIN_PASS){
-    sessionStorage.setItem('ll_admin', '1');
-    closeAdminLogin();
-    document.getElementById('adminLoginForm').reset();
-    enterAdmin();
-  } else {
-    showToast('Invalid username or password', 'alert-circle');
+  const email = document.getElementById('adminUser').value.trim();
+  const password = document.getElementById('adminPass').value.trim();
+  
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    
+    if(data.success && data.user.role === 'admin') {
+      localStorage.setItem('ll_admin_token', data.token);
+      sessionStorage.setItem('ll_admin', '1');
+      closeAdminLogin();
+      document.getElementById('adminLoginForm').reset();
+      enterAdmin();
+    } else {
+      showToast('Invalid admin credentials', 'alert-circle');
+    }
+  } catch(err) {
+    showToast('Login failed', 'alert-circle');
   }
 });
 
