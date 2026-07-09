@@ -52,15 +52,7 @@ app.get('/api/health', (req, res) => {
 
 // Serve frontend for all non-API routes
 app.get('*', (req, res) => {
-  let file = 'index.html';
-  const cleanPath = req.path.replace(/\/$/, ''); // Remove trailing slash
-  if (cleanPath === '/collection') {
-    file = 'collection.html';
-  } else if (cleanPath === '/wishlist') {
-    file = 'wishlist.html';
-  } else if (req.path.endsWith('.html')) {
-    file = req.path.slice(1);
-  }
+  const file = req.path.endsWith('.html') ? req.path.slice(1) : 'index.html';
   res.sendFile(path.join(__dirname, 'public', file), (err) => {
     if (err) res.sendFile(path.join(__dirname, 'public', 'index.html'));
   });

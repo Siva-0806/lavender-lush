@@ -390,7 +390,7 @@ document.getElementById('checkoutForm').addEventListener('submit', async (e) => 
   msg += `%0ATotal: $${cartSubtotal().toFixed(2)}%0A%0ADeliver to:%0A${name}, ${phone}%0A${address}, ${city} - ${pincode}`;
   if(note) msg += `%0A%0ANote: ${note}`;
 
-  window.open(`https://wa.me/919789512412?text=${msg}`, '_blank');
+  window.open(`https://wa.me/15552147788?text=${msg}`, '_blank');
 
   cart = [];
   saveCart();

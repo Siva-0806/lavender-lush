@@ -592,23 +592,23 @@ footer{background:var(--cream);padding-top:90px;}
 ============================================================ -->
 <header id="header">
   <nav class="wrap">
-    <a href="index.html#top" class="logo">
+    <a href="#top" class="logo">
       <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4c0 1.5-1 3-2 4h-4c-1-1-2-2.5-2-4a4 4 0 0 1 4-4Z"/><path d="M12 22v-8"/><path d="M8 14c-1.5-1-3-2.5-3-4.5a4 4 0 0 1 4-4"/><path d="M16 14c1.5-1 3-2.5 3-4.5a4 4 0 0 0-4-4"/></svg>
       Lavender<span>Lush</span>
     </a>
     <ul class="nav-links">
-      <li><a href="index.html#collections">Collections</a></li>
-      <li><a href="index.html#bestsellers">Best Sellers</a></li>
-      <li><a href="index.html#about">About</a></li>
-      <li><a href="index.html#testimonials">Reviews</a></li>
-      <li><a href="index.html#faq">FAQ</a></li>
-      <li><a href="index.html#footer">Contact</a></li>
+      <li><a href="#collections">Collections</a></li>
+      <li><a href="#bestsellers">Best Sellers</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#footer">Contact</a></li>
     </ul>
     <div class="nav-icons">
       <button class="icon-btn" id="searchBtn" aria-label="Search"><i data-lucide="search" style="width:18px;height:18px;"></i></button>
-      <a href="wishlist.html" class="icon-btn" aria-label="Wishlist"><i data-lucide="heart" style="width:18px;height:18px;"></i><span class="badge" id="wishlistCount" style="display:none;">0</span></a>
+      <button class="icon-btn" aria-label="Wishlist"><i data-lucide="heart" style="width:18px;height:18px;"></i><span class="badge" id="wishlistCount" style="display:none;">0</span></button>
       <button class="icon-btn" id="cartBtn" aria-label="Cart"><i data-lucide="shopping-bag" style="width:18px;height:18px;"></i><span class="badge" id="cartCount">0</span></button>
-      <a href="index.html#bestsellers" class="btn btn-primary" style="padding:11px 24px;font-size:13px;">Shop Now</a>
+      <a href="#bestsellers" class="btn btn-primary" style="padding:11px 24px;font-size:13px;">Shop Now</a>
       <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Menu"><i data-lucide="menu" style="width:20px;height:20px;"></i></button>
     </div>
   </nav>
@@ -617,25 +617,95 @@ footer{background:var(--cream);padding-top:90px;}
 <div class="drawer-overlay" id="drawerOverlay"></div>
 <div class="mobile-drawer" id="mobileDrawer">
   <button class="drawer-close" id="drawerClose"><i data-lucide="x" style="width:18px;height:18px;"></i></button>
-  <a href="index.html#collections">Collections</a>
-  <a href="index.html#bestsellers">Best Sellers</a>
-  <a href="index.html#about">About</a>
-  <a href="index.html#testimonials">Reviews</a>
-  <a href="index.html#faq">FAQ</a>
-  <a href="index.html#footer">Contact</a>
+  <a href="#collections">Collections</a>
+  <a href="#bestsellers">Best Sellers</a>
+  <a href="#about">About</a>
+  <a href="#testimonials">Reviews</a>
+  <a href="#faq">FAQ</a>
+  <a href="#footer">Contact</a>
 </div>
 
 <!-- ============================================================
      HERO
 ============================================================ -->
+<section class="hero" id="top" style="padding-bottom:60px;">
+  <div class="hero-bg-layer" id="parallaxLayer">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+  </div>
+
+  <div class="wrap hero-grid">
+    <div>
+      <span class="hero-eyebrow reveal in"><i data-lucide="sparkles" style="width:14px;height:14px;"></i> Handmade with love, stitch by stitch</span>
+      <h1 class="reveal in">Crochet gifts<br/>that feel like a <span class="italic">warm hug</span></h1>
+      <p class="sub hero-typing reveal in"><span id="typingTarget"></span><span class="cursor">&nbsp;</span></p>
+      <div class="hero-ctas reveal in">
+        <a href="#collections" class="btn btn-primary">Explore Collections <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+        <a href="#bestsellers" class="btn btn-secondary">Best Sellers</a>
+      </div>
+      <div class="hero-stats reveal in">
+        <div><h3><span class="counter" data-target="2400">0</span>+</h3><p>Happy customers</p></div>
+        <div><h3><span class="counter" data-target="850">0</span>+</h3><p>Handmade pieces</p></div>
+        <div><h3><span class="counter" data-target="49" data-decimal="10">0</span><i data-lucide="star" style="width:16px;height:16px;fill:#B69ACF;stroke:#B69ACF;"></i></h3><p>Average rating</p></div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-img-main" id="parallaxImg">
+        <img src="https://picsum.photos/seed/lavender-hero/900/1100" alt="Handmade lavender crochet bouquet" />
+      </div>
+      <div class="glass-card gc1">
+        <div class="gc-icon"><i data-lucide="heart-handshake" style="width:18px;height:18px;"></i></div>
+        <div><h4>100% Handmade</h4><p>Made to order, with care</p></div>
+      </div>
+      <div class="glass-card gc2">
+        <div class="gc-icon"><i data-lucide="gift" style="width:18px;height:18px;"></i></div>
+        <div><h4>Free Gift Wrap</h4><p>On every order</p></div>
+      </div>
+      <i data-lucide="flower" class="floating-petal" style="top:6%;left:4%;width:28px;"></i>
+      <i data-lucide="flower-2" class="floating-petal" style="bottom:8%;right:0;width:24px;color:var(--sage);animation-delay:1.4s;"></i>
+    </div>
+  </div>
+
+  <a href="#collections" class="scroll-indicator">
+    <div class="scroll-mouse"><div class="scroll-dot"></div></div>
+    Scroll
+  </a>
+</section>
+
 <!-- ============================================================
-     COLLECTION HEADER
+     FEATURED COLLECTIONS
 ============================================================ -->
-<section class="collection-header" style="background: linear-gradient(135deg, #FFF9F3 0%, #F8F4FC 100%); padding-top: 160px; padding-bottom: 40px; text-align: center;">
+<section id="collections">
   <div class="wrap">
-    <span class="eyebrow-label" id="collectionEyebrow">Lavender Lush Shop</span>
-    <h1 id="collectionTitle" style="font-size: clamp(32px, 5vw, 48px); margin-bottom: 12px; color: var(--text);">Our Products</h1>
-    <p id="collectionDesc" style="color: var(--text-light); max-width: 500px; margin: 0 auto; font-size: 15px;">Explore our beautiful handmade creations, crafted with love and patience.</p>
+    <div class="section-head reveal">
+      <span class="eyebrow-label">Curated for you</span>
+      <h2>Featured Collections</h2>
+      <p>Explore our signature edits — from everlasting bouquets to tiny keepsakes you can carry everywhere.</p>
+    </div>
+    <div class="collections-grid stagger">
+      <div class="collection-card reveal" style="--i:0;">
+        <img src="https://picsum.photos/seed/crochet-bouquets-col/500/650" alt="Crochet Bouquets" />
+        <div class="collection-arrow"><i data-lucide="arrow-up-right" style="width:18px;height:18px;color:#3F3245;"></i></div>
+        <div class="collection-overlay"><span>24 pieces</span><h3>Crochet Bouquets</h3></div>
+      </div>
+      <div class="collection-card reveal" style="--i:1;">
+        <img src="https://picsum.photos/seed/plushies-col/500/650" alt="Plushies" />
+        <div class="collection-arrow"><i data-lucide="arrow-up-right" style="width:18px;height:18px;color:#3F3245;"></i></div>
+        <div class="collection-overlay"><span>19 pieces</span><h3>Plushies</h3></div>
+      </div>
+      <div class="collection-card reveal" style="--i:2;">
+        <img src="https://picsum.photos/seed/gift-boxes-col/500/650" alt="Gift Boxes" />
+        <div class="collection-arrow"><i data-lucide="arrow-up-right" style="width:18px;height:18px;color:#3F3245;"></i></div>
+        <div class="collection-overlay"><span>16 pieces</span><h3>Gift Boxes</h3></div>
+      </div>
+      <div class="collection-card reveal" style="--i:3;">
+        <img src="https://picsum.photos/seed/wedding-col/500/650" alt="Wedding Bouquets" />
+        <div class="collection-arrow"><i data-lucide="arrow-up-right" style="width:18px;height:18px;color:#3F3245;"></i></div>
+        <div class="collection-overlay"><span>Made to order</span><h3>Accessories</h3></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -644,7 +714,11 @@ footer{background:var(--cream);padding-top:90px;}
 ============================================================ -->
 <section id="bestsellers" style="background:var(--cream);">
   <div class="wrap">
-    <!-- Section head removed for collection page -->
+    <div class="section-head reveal">
+      <span class="eyebrow-label">Loved the most</span>
+      <h2>Best Sellers</h2>
+      <p>The pieces our community keeps coming back for — soft, sweet, and endlessly giftable.</p>
+    </div>
 
     <div class="tab-row">
       <button class="tab-btn active" data-filter="all">All</button>
@@ -892,22 +966,20 @@ footer{background:var(--cream);padding-top:90px;}
         <p>Luxury handmade crochet gifts, bouquets and keepsakes — designed to be gifted, cherished, and kept forever.</p>
         
 <div class="footer-social">
-  <a href="https://instagram.com/_lavender_lush" target="_blank" aria-label="Instagram">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-  </a>
-  <a href="mailto:lavenderlush1211@gmail.com" aria-label="Email"><i data-lucide="mail" style="width:18px;height:18px;"></i></a>
-  <a href="https://wa.me/919789512412" target="_blank" aria-label="WhatsApp"><i data-lucide="phone" style="width:18px;height:18px;"></i></a>
+  <a href="https://instagram.com/_lavender_lush" target="_blank" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+  <a href="mailto:contact@lavenderlush.com" aria-label="Email"><i data-lucide="mail"></i></a>
+  <a href="https://wa.me/9789512412" target="_blank" aria-label="WhatsApp"><i data-lucide="phone"></i></a>
 </div>
 
       </div>
       <div class="footer-col">
         <h5>Shop</h5>
         <ul>
-          <li><a href="index.html#collections">Crochet Bouquets</a></li>
-          <li><a href="index.html#collections">Plushies</a></li>
-          <li><a href="index.html#collections">Keychains</a></li>
-          <li><a href="index.html#collections">Gift Boxes</a></li>
-          <li><a href="index.html#collections">Accessories</a></li>
+          <li><a href="#collections">Crochet Bouquets</a></li>
+          <li><a href="#collections">Plushies</a></li>
+          <li><a href="#collections">Keychains</a></li>
+          <li><a href="#collections">Gift Boxes</a></li>
+          <li><a href="#collections">Wedding Bouquets</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -916,7 +988,7 @@ footer{background:var(--cream);padding-top:90px;}
           
           
           <li><a href="#">Returns</a></li>
-          <li><a href="index.html#faq">FAQs</a></li>
+          <li><a href="#faq">FAQs</a></li>
           <li><a href="#">Custom Requests</a></li>
           <li><a href="#" id="adminLoginLink">Admin Login</a></li>
         </ul>
@@ -924,8 +996,8 @@ footer{background:var(--cream);padding-top:90px;}
       <div class="footer-col">
         <h5>Get in Touch</h5>
         <ul class="footer-contact">
-          <li><i data-lucide="mail" style="width:16px;height:16px;"></i> lavenderlush1211@gmail.com</li>
-          <li><i data-lucide="phone" style="width:16px;height:16px;"></i> 9789512412</li>
+          <li><i data-lucide="mail" style="width:16px;height:16px;"></i> hello@lavenderlush.co</li>
+          <li><i data-lucide="phone" style="width:16px;height:16px;"></i> +1 (555) 214-7788</li>
           <li><i data-lucide="map-pin" style="width:16px;height:16px;"></i> Coimbatore, Tamil Nadu, India</li>
           <li><i data-lucide="clock" style="width:16px;height:16px;"></i> Mon – Sat, 10am – 6pm</li>
         </ul>
@@ -1346,50 +1418,27 @@ function starIcons(rating){
   return out;
 }
 
-function loadWishlist(){
-  try{
-    const saved = localStorage.getItem('ll_wishlist');
-    if(saved) return JSON.parse(saved);
-  }catch(e){}
-  return [];
-}
-function saveWishlist(wishlist){
-  localStorage.setItem('ll_wishlist', JSON.stringify(wishlist));
-}
-function updateWishlistBadge(){
-  const wishlist = loadWishlist();
-  const countEl = document.getElementById('wishlistCount');
-  if(countEl){
-    countEl.textContent = wishlist.length;
-    countEl.style.display = wishlist.length > 0 ? 'flex' : 'none';
-  }
-}
-
 function renderProducts(){
-  const wishlist = loadWishlist();
   const grid = document.getElementById('productGrid');
-  grid.innerHTML = products.map(p => {
-    const isWishlisted = wishlist.includes(p.id);
-    return `
-      <div class="product-card show" data-cat="${p.category}" data-id="${p.id}">
-        <div class="product-media">
-          ${p.badge ? `<span class="product-badge${p.badge==='New' ? ' new' : ''}">${p.badge}</span>` : ''}
-          <button class="wishlist-btn${isWishlisted ? ' active' : ''}" aria-label="Wishlist"><i data-lucide="heart" style="width:16px;height:16px;"></i></button>
-          <img src="${p.image}" alt="${p.name}" />
-          <div class="quick-add" data-id="${p.id}"><i data-lucide="zap" style="width:14px;height:14px;"></i> Quick Add</div>
-        </div>
-        <div class="product-info">
-          <span class="p-cat">${CATEGORY_LABELS[p.category] || p.category}</span>
-          <h4>${p.name}</h4>
-          <div class="p-rating">${starIcons(p.rating)}<span>(${p.reviews})</span></div>
-          <div class="p-footer">
-            <span class="p-price">$${p.price}${p.oldPrice ? `<small>$${p.oldPrice}</small>` : ''}</span>
-            <button class="add-cart-btn" data-id="${p.id}"><i data-lucide="plus" style="width:17px;height:17px;"></i></button>
-          </div>
+  grid.innerHTML = products.map(p => `
+    <div class="product-card show" data-cat="${p.category}" data-id="${p.id}">
+      <div class="product-media">
+        ${p.badge ? `<span class="product-badge${p.badge==='New' ? ' new' : ''}">${p.badge}</span>` : ''}
+        <button class="wishlist-btn" aria-label="Wishlist"><i data-lucide="heart" style="width:16px;height:16px;"></i></button>
+        <img src="${p.image}" alt="${p.name}" />
+        <div class="quick-add" data-id="${p.id}"><i data-lucide="zap" style="width:14px;height:14px;"></i> Quick Add</div>
+      </div>
+      <div class="product-info">
+        <span class="p-cat">${CATEGORY_LABELS[p.category] || p.category}</span>
+        <h4>${p.name}</h4>
+        <div class="p-rating">${starIcons(p.rating)}<span>(${p.reviews})</span></div>
+        <div class="p-footer">
+          <span class="p-price">$${p.price}${p.oldPrice ? `<small>$${p.oldPrice}</small>` : ''}</span>
+          <button class="add-cart-btn" data-id="${p.id}"><i data-lucide="plus" style="width:17px;height:17px;"></i></button>
         </div>
       </div>
-    `;
-  }).join('');
+    </div>
+  `).join('');
   lucide.createIcons();
   const activeFilter = document.querySelector('.tab-btn.active')?.dataset.filter || 'all';
   document.querySelectorAll('#productGrid .product-card').forEach(card => {
@@ -1397,30 +1446,6 @@ function renderProducts(){
   });
 }
 renderProducts();
-updateWishlistBadge();
-
-// Handle category query parameter to select correct tab on page load
-const urlParams = new URLSearchParams(window.location.search);
-const catParam = urlParams.get('category');
-if (catParam) {
-  const titleMap = {
-    bouquets: { title: "Crochet Bouquets", desc: "Everlasting, hand-stitched floral arrangements that never wilt." },
-    plushies: { title: "Crochet Plushies", desc: "Soft, cuddly companions made with premium cotton yarn." },
-    keychains: { title: "Crochet Accessories", desc: "Cute, pocket-sized charms and accessories to carry with you." },
-    giftboxes: { title: "Gift Boxes", desc: "Curated gift boxes designed for birthdays, baby welcomes, and milestones." }
-  };
-  if (titleMap[catParam]) {
-    document.getElementById('collectionTitle').textContent = titleMap[catParam].title;
-    document.getElementById('collectionDesc').textContent = titleMap[catParam].desc;
-  }
-  
-  const tab = document.querySelector(`.tab-btn[data-filter="${catParam}"]`);
-  if(tab) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    tab.classList.add('active');
-    renderProducts();
-  }
-}
 
 /* ============================================================
    WISHLIST TOGGLE (event delegation so re-rendered cards stay wired)
@@ -1428,22 +1453,8 @@ if (catParam) {
 document.getElementById('productGrid').addEventListener('click', (e) => {
   const wishBtn = e.target.closest('.wishlist-btn');
   if(wishBtn){
-    const card = wishBtn.closest('.product-card');
-    const id = card.dataset.id;
-    let wishlist = loadWishlist();
-    const isActive = wishBtn.classList.contains('active');
-    
-    if(isActive){
-      wishlist = wishlist.filter(x => x !== id);
-      wishBtn.classList.remove('active');
-      showToast('Removed from wishlist', 'heart');
-    } else {
-      if(!wishlist.includes(id)) wishlist.push(id);
-      wishBtn.classList.add('active');
-      showToast('Added to wishlist', 'heart');
-    }
-    saveWishlist(wishlist);
-    updateWishlistBadge();
+    wishBtn.classList.toggle('active');
+    if(wishBtn.classList.contains('active')) showToast('Added to wishlist', 'heart');
     return;
   }
   const cartTrigger = e.target.closest('.add-cart-btn, .quick-add');
@@ -1587,7 +1598,7 @@ document.getElementById('checkoutForm').addEventListener('submit', (e) => {
   msg += `%0ATotal: $${cartSubtotal().toFixed(2)}%0A%0ADeliver to:%0A${name}, ${phone}%0A${address}, ${city} - ${pincode}`;
   if(note) msg += `%0A%0ANote: ${note}`;
 
-  window.open(`https://wa.me/919789512412?text=${msg}`, '_blank');
+  window.open(`https://wa.me/15552147788?text=${msg}`, '_blank');
 
   cart = [];
   saveCart();
