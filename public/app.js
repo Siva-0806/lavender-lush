@@ -44,8 +44,8 @@ const menuToggle = document.getElementById('menuToggle');
 const mobileDrawer = document.getElementById('mobileDrawer');
 const drawerOverlay = document.getElementById('drawerOverlay');
 const drawerClose = document.getElementById('drawerClose');
-function openDrawer(){ mobileDrawer.classList.add('open'); drawerOverlay.classList.add('open'); }
-function closeDrawer(){ mobileDrawer.classList.remove('open'); drawerOverlay.classList.remove('open'); }
+function openDrawer(){ mobileDrawer.classList.add('open'); drawerOverlay.classList.add('open'); document.body.style.overflow='hidden'; }
+function closeDrawer(){ mobileDrawer.classList.remove('open'); drawerOverlay.classList.remove('open'); document.body.style.overflow=''; }
 menuToggle.addEventListener('click', openDrawer);
 drawerClose.addEventListener('click', closeDrawer);
 drawerOverlay.addEventListener('click', closeDrawer);
@@ -103,6 +103,7 @@ typeLoop();
 const parallaxImg = document.getElementById('parallaxImg');
 const parallaxLayer = document.getElementById('parallaxLayer');
 window.addEventListener('scroll', () => {
+  if(window.innerWidth < 768) return;
   const y = window.scrollY;
   if(y < window.innerHeight){
     parallaxImg.style.transform = `translateY(${y * 0.18}px)`;
@@ -306,8 +307,8 @@ cartItemsEl.addEventListener('click', (e) => {
   renderCart();
 });
 
-function openCart(){ cartDrawer.classList.add('open'); cartOverlay.classList.add('open'); renderCart(); }
-function closeCart(){ cartDrawer.classList.remove('open'); cartOverlay.classList.remove('open'); }
+function openCart(){ cartDrawer.classList.add('open'); cartOverlay.classList.add('open'); document.body.style.overflow='hidden'; renderCart(); }
+function closeCart(){ cartDrawer.classList.remove('open'); cartOverlay.classList.remove('open'); document.body.style.overflow=''; }
 document.getElementById('cartBtn').addEventListener('click', openCart);
 document.getElementById('cartClose').addEventListener('click', closeCart);
 cartOverlay.addEventListener('click', closeCart);
@@ -326,8 +327,9 @@ function openCheckout(){
   closeCart();
   checkoutOverlay.classList.add('open');
   checkoutModal.classList.add('open');
+  document.body.style.overflow='hidden';
 }
-function closeCheckout(){ checkoutOverlay.classList.remove('open'); checkoutModal.classList.remove('open'); }
+function closeCheckout(){ checkoutOverlay.classList.remove('open'); checkoutModal.classList.remove('open'); document.body.style.overflow=''; }
 document.getElementById('checkoutBtn').addEventListener('click', openCheckout);
 document.getElementById('checkoutClose').addEventListener('click', closeCheckout);
 checkoutOverlay.addEventListener('click', closeCheckout);
@@ -753,6 +755,26 @@ document.querySelector('.testimonial-wrap').addEventListener('mouseleave', () =>
   autoSlide = setInterval(() => goToSlide(slideIndex + 1), 5000);
 });
 
+// Touch swipe support for testimonial slider
+let touchStartX = 0;
+let touchEndX = 0;
+const testimonialWrap = document.querySelector('.testimonial-wrap');
+if(testimonialWrap) {
+  testimonialWrap.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    clearInterval(autoSlide);
+  }, {passive: true});
+  testimonialWrap.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if(Math.abs(diff) > 50) {
+      if(diff > 0) goToSlide(slideIndex + 1);
+      else goToSlide(slideIndex - 1);
+    }
+    autoSlide = setInterval(() => goToSlide(slideIndex + 1), 5000);
+  }, {passive: true});
+}
+
 /* ============================================================
    FAQ ACCORDION
 ============================================================ */
@@ -787,23 +809,17 @@ if(customOrderForm) {
     customOrderForm.reset();
   });
 }
- 
-  e.preventDefault();
-  newsletterForm.style.display = 'none';
-  newsletterSuccess.classList.add('show');
-  showToast('Subscribed successfully');
-});
 
 
 
 // Hero Slider
 let currentSlide = 0;
-const slides = document.querySelectorAll('.hero-slider .slide');
-if(slides.length > 0) {
+const heroSlides = document.querySelectorAll('.hero-slider .slide');
+if(heroSlides.length > 0) {
   setInterval(() => {
-    slides[currentSlide].classList.remove('active');
-    currentSlide = (currentSlide + 1) % slides.length;
-    slides[currentSlide].classList.add('active');
+    heroSlides[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + 1) % heroSlides.length;
+    heroSlides[currentSlide].classList.add('active');
   }, 3000);
 }
 
