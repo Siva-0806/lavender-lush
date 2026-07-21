@@ -588,7 +588,7 @@ function renderAdminProducts(){
   `).join('');
   lucide.createIcons();
 }
-document.querySelector('#adminProductsTable tbody').addEventListener('click', (e) => {
+document.querySelector('#adminProductsTable tbody').addEventListener('click', async (e) => {
   const row = e.target.closest('tr');
   if(!row) return;
   const id = row.dataset.id;

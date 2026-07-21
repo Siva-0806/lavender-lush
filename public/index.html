@@ -1494,15 +1494,31 @@ const DEFAULT_PRODUCTS = [
 ];
 const CATEGORY_LABELS = {bouquets:'Bouquets', plushies:'Plushies', keychains:'Keychains', giftboxes:'Gift Boxes'};
 
-function loadProducts(){
-  try{
-    const saved = localStorage.getItem('ll_products');
-    if(saved) return JSON.parse(saved);
-  }catch(e){}
-  return JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
+let products = [];
+async function fetchProducts() {
+  try {
+    const res = await fetch('/api/products');
+    const data = await res.json();
+    if (data.success) {
+      products = data.products.map(p => ({
+        id: p._id,
+        name: p.name,
+        category: p.category,
+        price: p.price,
+        oldPrice: p.oldPrice || p.compareAtPrice,
+        image: p.images && p.images[0] ? p.images[0] : (p.image || 'https://picsum.photos/500/500'),
+        badge: p.badge || (p.featured ? 'Bestseller' : ''),
+        rating: p.rating || 5,
+        reviews: p.reviewCount || p.reviews || 0
+      }));
+      if (typeof renderProducts === 'function') renderProducts();
+      if(document.getElementById('adminPanel') && document.getElementById('adminPanel').classList.contains('open')){
+         if (typeof renderAdminProducts === 'function') renderAdminProducts();
+      }
+    }
+  } catch(e) { console.error(e); }
 }
-function saveProducts(){ localStorage.setItem('ll_products', JSON.stringify(products)); }
-let products = loadProducts();
+fetchProducts();
 
 function starIcons(rating){
   let out = '';
@@ -1801,6 +1817,16 @@ document.getElementById('addProductBtn').addEventListener('click', () => openPro
 document.getElementById('productFormClose').addEventListener('click', closeProductForm);
 productFormOverlay.addEventListener('click', closeProductForm);
 
+async function apiFetch(endpoint, options = {}) {
+  const token = localStorage.getItem('ll_admin_token');
+  if (!token) return { success: false };
+  options.headers = { ...options.headers, 'Authorization': `Bearer ${token}` };
+  try {
+    const res = await fetch('/api' + endpoint, options);
+    return await res.json();
+  } catch(e) { return { success: false }; }
+}
+
 productForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const id = document.getElementById('pfId').value;
@@ -1850,7 +1876,7 @@ function renderAdminProducts(){
   `).join('');
   lucide.createIcons();
 }
-document.querySelector('#adminProductsTable tbody').addEventListener('click', (e) => {
+document.querySelector('#adminProductsTable tbody').addEventListener('click', async (e) => {
   const row = e.target.closest('tr');
   if(!row) return;
   const id = row.dataset.id;
