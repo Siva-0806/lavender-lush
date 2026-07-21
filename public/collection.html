@@ -1797,7 +1797,7 @@ async function apiFetch(endpoint, options = {}) {
   } catch(e) { return { success: false }; }
 }
 
-productForm.addEventListener('submit', (e) => {
+productForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const id = document.getElementById('pfId').value;
   const data = {
@@ -1807,23 +1807,31 @@ productForm.addEventListener('submit', (e) => {
     price: parseFloat(document.getElementById('pfPrice').value),
     oldPrice: document.getElementById('pfOldPrice').value ? parseFloat(document.getElementById('pfOldPrice').value) : null,
     image: document.getElementById('pfImage').value.trim(),
-    rating: parseInt(document.getElementById('pfRating').value, 10),
-    reviews: parseInt(document.getElementById('pfReviews').value, 10),
+    rating: parseInt(document.getElementById('pfRating').value, 10) || 0,
+    reviews: parseInt(document.getElementById('pfReviews').value, 10) || 0,
   };
-  if(id){
-    const idx = products.findIndex(p => p.id === id);
-    products[idx] = {...products[idx], ...data};
-    showToast('Product updated', 'check-circle');
+  
+  if(id && id !== ''){ // valid mongo id check loosely
+    const res = await apiFetch('/products/' + id, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if(res && res.success) showToast('Product updated', 'check-circle');
+    else showToast('Error updating product', 'alert-circle');
   } else {
-    data.id = 'p' + Date.now();
-    products.push(data);
-    showToast('Product added', 'check-circle');
+    const res = await apiFetch('/products', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if(res && res.success) showToast('Product added', 'check-circle');
+    else showToast('Error adding product', 'alert-circle');
   }
-  saveProducts();
-  renderProducts();
-  renderAdminProducts();
-  renderAdminDashboard();
-  closeProductForm();
+  
+  if (typeof fetchProducts === 'function') await fetchProducts();
+  if (typeof renderAdminDashboard === 'function') renderAdminDashboard();
+  if (typeof closeProductForm === 'function') closeProductForm();
 });
 
 function renderAdminProducts(){
@@ -1853,12 +1861,14 @@ document.querySelector('#adminProductsTable tbody').addEventListener('click', as
   if(e.target.closest('.edit-product')) openProductForm(id);
   else if(e.target.closest('.delete-product')){
     if(confirm('Delete this product? This cannot be undone.')){
-      products = products.filter(p => p.id !== id);
-      saveProducts();
-      renderProducts();
-      renderAdminProducts();
-      renderAdminDashboard();
-      showToast('Product deleted', 'trash-2');
+      const res = await apiFetch('/products/' + id, { method: 'DELETE' });
+      if(res && res.success) {
+        showToast('Product deleted', 'trash-2');
+        if (typeof fetchProducts === 'function') await fetchProducts();
+        if (typeof renderAdminDashboard === 'function') renderAdminDashboard();
+      } else {
+        showToast('Error deleting product', 'alert-circle');
+      }
     }
   }
 });

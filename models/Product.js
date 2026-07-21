@@ -12,9 +12,9 @@ const productSchema = new mongoose.Schema({
   featured: { type: Boolean, default: false },
   description: String,
   stock: { type: Number, default: 0 },
-  sku: { type: String, unique: true },
+  sku: { type: String, unique: true, sparse: true },
   tags: [String],
-  slug: { type: String, unique: true },
+  slug: { type: String, unique: true, sparse: true },
   images: [String],
   isDeleted: { type: Boolean, default: false }
 }, { timestamps: true });
